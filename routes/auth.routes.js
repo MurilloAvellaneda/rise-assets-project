@@ -1,6 +1,8 @@
 // Pacotes
 const { Router } = require("express");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
 
 
 // Modelos
@@ -41,6 +43,44 @@ router.post("/signup", async(req, res) =>{
         // Se ocorreram erros
     } catch(error) {
         res.status(500).json({message: "Error creating user", error: error.message})
+    }
+})
+
+router.post("/login", async(req, res) => {
+    const { email, password } = req.body;
+    try{
+        // Verificando se as informações estão presentes
+        if(!email || !password) {
+            throw new Error("Missing information");
+        }
+
+        // Verificando se o usuário existe
+        const userFromDb = await User.findOne({email});
+        if(!userFromDb){
+            throw new Error("Wrong username or password")
+        }
+
+        // Verificando se a senha está correta
+        const validation = bcrypt.compareSync(password, userFromDb.passwordHash);
+        if(!validation){
+            throw new Error("Wrong username or password");
+        }
+
+        // Informações para o carregamento do token
+        const payload = {
+            id: userFromDb._id,
+            email: userFromDb.email
+        };
+
+        // Criando o token que carrega a informação de login
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "5days"
+        });
+
+         // Se nenhum erro ocorreu até o momento, temos sucesso:
+         res.status(200).json({user: payload, token});
+    } catch(error) {
+        res.status(500).json({message: "Error trying to login", error: error.message});
     }
 })
 
