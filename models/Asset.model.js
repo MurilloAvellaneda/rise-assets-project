@@ -6,10 +6,10 @@ const assetSchema = new Schema (
             type: Schema.Types.ObjectId,
             ref: "User"
         },
-        // stockbrokerId: {
-        //     type: Schema.Types.ObjectId,
-        //     ref: "Stockbroker"
-        // },
+        stockbrokerId: {
+            type: Schema.Types.ObjectId,
+            ref: "Stockbroker"
+        },
         assetTicker: {
             type: String,
             required: true
