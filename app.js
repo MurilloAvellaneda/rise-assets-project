@@ -20,6 +20,7 @@ app.use("/auth", require("./routes/auth.routes"));
 // Middlewares de rotas
 app.use(require("./middlewares/auth.middleware"));
 app.use("/assets", require("./routes/asset.routes"));
+app.use("/stockbrokers", require("./routes/stockbroker.routes"));
 
 app.listen(process.env.PORT, () => {
     console.log(`Server running on PORT: ${process.env.PORT}`)

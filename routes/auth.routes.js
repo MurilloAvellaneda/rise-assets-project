@@ -74,7 +74,7 @@ router.post("/login", async(req, res) => {
 
         // Criando o token que carrega a informação de login
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: "5days"
+            expiresIn: "10days"
         });
 
          // Se nenhum erro ocorreu até o momento, temos sucesso:

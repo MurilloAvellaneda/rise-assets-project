@@ -2,7 +2,7 @@ const { model, Schema } = require("mongoose");
 
 const stockbrokerSchema = new Schema (
     {
-        asset_id: [{
+        assetId: [{
             type: Schema.Types.ObjectId, ref: "Asset"
         }],
         stockbroker: {
@@ -10,11 +10,11 @@ const stockbrokerSchema = new Schema (
             required: true,
             unique: true,
         },
-        account_opening_fee: {
+        accountOpeningFee: {
             type: Number,
             required: true
         },
-        account_opening_date: {
+        accountOpeningDate: {
             type: Date,
             required: true
         }
